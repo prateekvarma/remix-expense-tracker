@@ -1,5 +1,10 @@
-export default function ExpensesPage() {
+import { Outlet } from "@remix-run/react";
+
+export default function ExpensesLayout() {
     return (
-        <h1>Expenses Page</h1>
+        <main>
+            <p>Shared element</p>
+            <Outlet />
+        </main>
     )
 }
