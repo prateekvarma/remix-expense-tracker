@@ -1,7 +1,6 @@
 // /expenses/<some-id>
+import ExpenseForm from '~/components/expenses/ExpenseForm';
 
 export default function UpdateExpensesPage() {
-    return (
-        <h1>Update Expenses Page</h1>
-    )
+  return <ExpenseForm />;
 }
