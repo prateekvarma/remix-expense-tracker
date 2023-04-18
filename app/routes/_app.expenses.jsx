@@ -16,7 +16,7 @@ const DUMMY_EXPENSES = [
 import { Outlet } from '@remix-run/react';
 import ExpensesList from '~/components/expenses/ExpensesList';
 import expensesStyles from '~/styles/expenses.css';
-
+// tbd: create a new layout file called _app.tsx and put all the expenses files in it, so they can share the mainHeader
 export default function ExpensesLayout() {
   return (
     <>
