@@ -6,7 +6,7 @@ export async function addExpense(expenseData) {
       data: {
         title: expenseData.title,
         amount: +expenseData.amount,
-        date: new Date(expenseData.Date),
+        date: new Date(expenseData.date),
       },
     });
   } catch (error) {
