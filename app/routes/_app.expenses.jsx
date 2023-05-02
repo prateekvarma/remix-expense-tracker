@@ -1,24 +1,12 @@
-const DUMMY_EXPENSES = [
-  {
-    id: 'e1',
-    title: 'first title',
-    amount: 12.99,
-    date: new Date().toISOString(),
-  },
-  {
-    id: 'e2',
-    title: 'second title',
-    amount: 16.99,
-    date: new Date().toISOString(),
-  },
-];
-
-import { Link, Outlet } from '@remix-run/react';
+import { Link, Outlet, useLoaderData } from '@remix-run/react';
 import { FaDownload, FaPlus } from 'react-icons/fa';
 import ExpensesList from '~/components/expenses/ExpensesList';
 import expensesStyles from '~/styles/expenses.css';
-// tbd: create a new layout file called _app.tsx and put all the expenses files in it, so they can share the mainHeader
+import { getExpenses } from '../data/expenses.server';
+
 export default function ExpensesLayout() {
+  const expenses = useLoaderData()
+
   return (
     <>
       <Outlet />
@@ -34,7 +22,7 @@ export default function ExpensesLayout() {
             <span>Load Raw Data</span>
           </a>
         </section>
-        <ExpensesList expenses={DUMMY_EXPENSES} />
+        <ExpensesList expenses={expenses} />
       </main>
     </>
   );
@@ -42,4 +30,8 @@ export default function ExpensesLayout() {
 
 export function links() {
   return [{ rel: 'stylesheet', href: expensesStyles }];
+}
+
+export function loader() {
+  return getExpenses()
 }
