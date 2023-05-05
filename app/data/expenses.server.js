@@ -39,7 +39,7 @@ export async function getExpense(id) {
 
 export async function updateExpense(id, expenseData) {
   try {
-    prisma.expense.update({
+    await prisma.expense.update({
       where: { id },
       data: {
         title: expenseData.title,
