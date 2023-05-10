@@ -35,7 +35,7 @@ function ExpenseForm() {
   const isSubmitting = navigation.state !== 'idle';
 
   return (
-    <Form method='post' className='form' id='expense-form'>
+    <Form method={expenseData ? 'PATCH' : 'POST'} className='form' id='expense-form'>
       <p>
         <label htmlFor='title'>Expense Title</label>
         <input
@@ -83,7 +83,7 @@ function ExpenseForm() {
         </ul>
       )}
       <div className='form-actions'>
-        <button disabled={isSubmitting}>
+        <button disabled={isSubmitting} formMethod={expenseData ? 'PATCH' : 'POST'}>
           {isSubmitting ? '...saving' : 'Save Expense'}
         </button>
         <Link to='..'>Cancel</Link>
