@@ -6,6 +6,14 @@ function ExpenseListItem({ id, title, amount }) {
     fetcher.submit(null, { method: 'DELETE', action: `/expenses/${id}` });
   }
 
+  if (fetcher.state !== 'idle') {
+    return (
+      <article className='expense-item locked'>
+        <p>Deleting...</p>
+      </article>
+    );
+  }
+
   return (
     <article className='expense-item'>
       <div>
