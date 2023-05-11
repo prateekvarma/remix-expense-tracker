@@ -3,6 +3,10 @@ import { Form, Link, useFetcher } from '@remix-run/react';
 function ExpenseListItem({ id, title, amount }) {
   const fetcher = useFetcher();
   function deleteExpenseItemHandler() {
+    const proceed = confirm('Sure you want to delete?')
+    if(!proceed) {
+      return;
+    }
     fetcher.submit(null, { method: 'DELETE', action: `/expenses/${id}` });
   }
 
