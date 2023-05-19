@@ -5,7 +5,7 @@ import expensesStyles from '~/styles/expenses.css';
 import { getExpenses } from '../data/expenses.server';
 
 export default function ExpensesLayout() {
-  const expenses = useLoaderData()
+  const expenses = useLoaderData();
 
   return (
     <>
@@ -32,6 +32,19 @@ export function links() {
   return [{ rel: 'stylesheet', href: expensesStyles }];
 }
 
-export function loader() {
-  return getExpenses()
+export async function loader() {
+  const expenses = await getExpenses();
+console.log('retreieved expenses: ', expenses);
+  if (!expenses || expenses.length < 1) {
+    throw json(
+      { message: 'No expenses available!' },
+      { status: 404, statusText: 'No expenses saved in DB' }
+    );
+  } else {
+    return expenses
+  }
+}
+
+export function ErrorBoundary() {
+  return <p>Error</p>;
 }
