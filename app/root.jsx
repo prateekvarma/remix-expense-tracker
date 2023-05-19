@@ -29,7 +29,7 @@ function Document({ title, children }) {
         <LiveReload />
       </body>
     </html>
-  )
+  );
 }
 
 export default function App() {
@@ -41,19 +41,43 @@ export default function App() {
 }
 
 export function ErrorBoundary() {
-  const error = useRouteError()
+  const error = useRouteError();
 
   if (isRouteErrorResponse(error)) {
+    //for isRouteErrorResponse
     return (
       <Document title={error.status}>
-      <main>
-        <div>
-          <p>{error.status}: {error.statusText}</p>
-          <p>{error.data?.message || 'Something went wrong'}</p>
-          <p>Back to <Link to='/'>safety</Link>.</p>
-        </div>
-      </main>
-    </Document>
+        <main>
+          <div>
+            <h3>RouteErrorResponse</h3>
+            <p>
+              {error.status}: {error.statusText}
+            </p>
+            <p>{error.data?.message || 'Something went wrong'}</p>
+            <p>
+              Back to <Link to='/'>safety</Link>.
+            </p>
+          </div>
+        </main>
+      </Document>
+    );
+  } else {
+    // for all other kinds of errors
+    return (
+      <Document title={error.status}>
+        <main>
+          <div>
+            <h3>Unknown Error!</h3>
+            <p>
+              {error.status}: {error.statusText}
+            </p>
+            {/* <p>{error.data?.message || 'Something went wrong'}</p> */}
+            <p>
+              Back to <Link to='/'>safety</Link>.
+            </p>
+          </div>
+        </main>
+      </Document>
     );
   }
 }
