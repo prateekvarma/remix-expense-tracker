@@ -6,6 +6,7 @@ import { getExpenses } from '../data/expenses.server';
 
 export default function ExpensesLayout() {
   const expenses = useLoaderData();
+  const hasExpenses = expenses && expenses.length > 0;
 
   return (
     <>
@@ -22,7 +23,11 @@ export default function ExpensesLayout() {
             <span>Load Raw Data</span>
           </a>
         </section>
-        <ExpensesList expenses={expenses} />
+        {hasExpenses && <ExpensesList expenses={expenses} />}
+        {!hasExpenses && <section id='no-expenses'>
+          <h1>No Expenses found!</h1>
+          <p>You can <Link to='add'>add</Link> one now</p>
+          </section>}
       </main>
     </>
   );
@@ -34,17 +39,15 @@ export function links() {
 
 export async function loader() {
   const expenses = await getExpenses();
-console.log('retreieved expenses: ', expenses);
-  if (!expenses || expenses.length < 1) {
-    throw json(
-      { message: 'No expenses available!' },
-      { status: 404, statusText: 'No expenses saved in DB' }
-    );
-  } else {
-    return expenses
-  }
+  return expenses;
+
+  // if (!expenses || expenses.length < 1) {
+  //   throw json(
+  //     { message: 'No expenses available!' },
+  //     { status: 404, statusText: 'No expenses saved in DB' }
+  //   );
+  // } else {
+  //   return expenses
+  // }
 }
 
-export function ErrorBoundary() {
-  return <p>Error</p>;
-}
