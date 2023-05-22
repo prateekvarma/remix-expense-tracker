@@ -20,6 +20,15 @@ function ExpenseForm() {
   ).data;
   const expenseData = allExpenses.find((expense) => expense.id === params.id);
 
+  if(params.id && !expenseData) {
+    //we're on the edit page, and have and invalid ID
+    // either : throw new Response()
+    // Or the code below
+    return (
+      <p>Invalid expense ID</p>
+    )
+  }
+
   const defaultValue = expenseData
     ? {
         title: expenseData.title,
