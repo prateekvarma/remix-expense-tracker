@@ -2,6 +2,8 @@ import AuthForm from '~/components/auth/AuthForm';
 import { validateCredentials } from '../data/validation.server';
 
 import authStyles from '~/styles/auth.css';
+import { signup } from '../data/auth.server';
+import { redirect } from '@remix-run/node';
 
 export default function AuthPage() {
   return <AuthForm />;
@@ -25,7 +27,9 @@ export async function action({ request }) {
   if(authMode === 'login') {
     
   } else {
-
+    //signup logic
+    await signup(credentials);
+    return redirect('/expenses');
   }
 }
 
