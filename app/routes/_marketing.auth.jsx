@@ -24,12 +24,20 @@ export async function action({ request }) {
     return error;
   }
 
-  if(authMode === 'login') {
-    
-  } else {
-    //signup logic
-    await signup(credentials);
-    return redirect('/expenses');
+  try {
+    if (authMode === 'login') {
+
+    } else {
+      //signup logic
+      await signup(credentials);
+      return redirect('/expenses');
+    }
+  } catch (error) {
+    if(error.status === 422) {
+      return {
+        credentials: error.message // returning here would display error on form
+      }
+    }
   }
 }
 

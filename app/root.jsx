@@ -62,6 +62,7 @@ export function ErrorBoundary() {
       </Document>
     );
   } else {
+    console.log('New error: ', error);
     // for all other kinds of errors
     return (
       <Document title={error.status}>
@@ -69,7 +70,7 @@ export function ErrorBoundary() {
           <div>
             <h3>Unknown Error!</h3>
             <p>
-              {error.status}: {error.statusText}
+             {error.status}: {error.message} {/* error.status does not work */}
             </p>
             {/* <p>{error.data?.message || 'Something went wrong'}</p> */}
             <p>

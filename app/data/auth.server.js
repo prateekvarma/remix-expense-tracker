@@ -6,8 +6,8 @@ export async function signup({ email, password }) {
   const existingUser = await prisma.user.findFirst({ where: { email } });
 
   if (existingUser) {
-    const error = new Error('A user with this email already exists');
-    error.status = 422;
+    const error = new Error('A user with this email already exists'); //works
+    error.status = 422; //does not work
     throw error;
   }
 
