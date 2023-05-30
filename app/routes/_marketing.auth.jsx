@@ -2,7 +2,7 @@ import AuthForm from '~/components/auth/AuthForm';
 import { validateCredentials } from '../data/validation.server';
 
 import authStyles from '~/styles/auth.css';
-import { signup } from '../data/auth.server';
+import { login, signup } from '../data/auth.server';
 import { redirect } from '@remix-run/node';
 
 export default function AuthPage() {
@@ -26,17 +26,17 @@ export async function action({ request }) {
 
   try {
     if (authMode === 'login') {
-
+      return login(credentials);
     } else {
       //signup logic
       await signup(credentials);
       return redirect('/expenses');
     }
   } catch (error) {
-    if(error.status === 422) {
+    if (error.status === 422) {
       return {
-        credentials: error.message // returning here would display error on form
-      }
+        credentials: error.message, // returning here would display error on form
+      };
     }
   }
 }

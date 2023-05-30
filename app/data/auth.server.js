@@ -15,6 +15,16 @@ const sessionStorage = createCookieSessionStorage({
   },
 });
 
+async function createUserSession(userId, redirectPath) {
+  const session = await sessionStorage.getSession();
+  session.set('userId', userId);
+  return redirect(redirectPath, {
+    header: {
+      'Set-Cookie': sessionStorage.commitSession(session),
+    },
+  });
+}
+
 export async function signup({ email, password }) {
   const existingUser = await prisma.user.findFirst({ where: { email } });
 
@@ -47,4 +57,5 @@ export async function login({ email, password }) {
   }
 
   // auth success
+  return createUserSession(existingUser.id, '/expenses');
 }
