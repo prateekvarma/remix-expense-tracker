@@ -3,7 +3,7 @@ import { validateCredentials } from '../data/validation.server';
 
 import authStyles from '~/styles/auth.css';
 import { login, signup } from '../data/auth.server';
-import { redirect } from '@remix-run/node';
+// import { redirect } from '@remix-run/node';
 
 export default function AuthPage() {
   return <AuthForm />;
@@ -26,11 +26,10 @@ export async function action({ request }) {
 
   try {
     if (authMode === 'login') {
-      return login(credentials);
+      return await login(credentials);
     } else {
       //signup logic
-      await signup(credentials);
-      return redirect('/expenses');
+      return await signup(credentials);
     }
   } catch (error) {
     if (error.status === 422) {
