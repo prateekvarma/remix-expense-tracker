@@ -3,6 +3,7 @@ import { FaDownload, FaPlus } from 'react-icons/fa';
 import ExpensesList from '~/components/expenses/ExpensesList';
 import expensesStyles from '~/styles/expenses.css';
 import { getExpenses } from '../data/expenses.server';
+import { requireUserSession } from '../data/auth.server';
 
 export default function ExpensesLayout() {
   const expenses = useLoaderData();
@@ -37,7 +38,11 @@ export function links() {
   return [{ rel: 'stylesheet', href: expensesStyles }];
 }
 
-export async function loader() {
+export async function loader({ request }) {
+  //check if user is logged in
+  await requireUserSession(request);
+  // if made past this, the user if logged in
+
   const expenses = await getExpenses();
   return expenses;
 

@@ -1,3 +1,4 @@
+import { json } from '@remix-run/node';
 import { destroyUserSession } from '../data/auth.server';
 
 // triggered when logout button is clicked

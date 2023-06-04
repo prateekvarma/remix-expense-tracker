@@ -18,7 +18,6 @@ const sessionStorage = createCookieSessionStorage({
 async function createUserSession(userId, redirectPath) {
   const session = await sessionStorage.getSession();
   session.set('userId', userId);
-  console.log('reached line 21', userId, redirectPath);
   return redirect(redirectPath, {
     headers: {
       'Set-Cookie': await sessionStorage.commitSession(session),
@@ -45,6 +44,15 @@ export async function destroyUserSession(request) {
       'Set-Cookie': await sessionStorage.destroySession(session),
     },
   });
+}
+
+export async function requireUserSession(request) {
+  const userId = await getUserFromSession(request);
+
+  if(!userId) {
+    //user is not logged in
+    throw redirect('/auth?mode=login');
+  }
 }
 
 export async function signup({ email, password }) {
