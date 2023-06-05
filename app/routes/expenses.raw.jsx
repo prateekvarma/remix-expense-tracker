@@ -1,3 +1,5 @@
+import { requireUserSession } from '../data/auth.server';
+
 const DUMMY_EXPENSES = [
   {
     id: 'e1',
@@ -13,6 +15,7 @@ const DUMMY_EXPENSES = [
   },
 ];
 
-export function loader() {
+export async function loader({ request }) {
+  await requireUserSession(request);
   return DUMMY_EXPENSES;
 }

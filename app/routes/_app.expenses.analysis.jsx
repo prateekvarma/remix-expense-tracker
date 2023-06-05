@@ -3,10 +3,10 @@ import Chart from '~/components/expenses/Chart';
 import { getExpenses } from '../data/expenses.server';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import { requireUserSession } from '../data/auth.server';
 
 export default function ExpensesAnalysisPage() {
   const expenses = useLoaderData();
-
 
   return (
     <main>
@@ -16,7 +16,9 @@ export default function ExpensesAnalysisPage() {
   );
 }
 
-export async function loader() {
+export async function loader({ request }) {
+  await requireUserSession(request); //to redirect user to login if he is not logged in
+
   const expenses = await getExpenses();
   if (!expenses || expenses.length === 0) {
     throw json(
