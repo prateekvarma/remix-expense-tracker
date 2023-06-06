@@ -40,10 +40,10 @@ export function links() {
 
 export async function loader({ request }) {
   //check if user is logged in
-  await requireUserSession(request);
+  const userId = await requireUserSession(request);
   // if made past this, the user if logged in
 
-  const expenses = await getExpenses();
+  const expenses = await getExpenses(userId);
   return expenses;
 
   // if (!expenses || expenses.length < 1) {
