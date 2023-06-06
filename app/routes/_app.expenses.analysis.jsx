@@ -10,16 +10,16 @@ export default function ExpensesAnalysisPage() {
 
   return (
     <main>
-      <Chart expenses={DUMMY_EXPENSES} />
-      <ExpenseStatistics expenses={DUMMY_EXPENSES} />
+      <Chart expenses={expenses} />
+      <ExpenseStatistics expenses={expenses} />
     </main>
   );
 }
 
 export async function loader({ request }) {
-  await requireUserSession(request); //to redirect user to login if he is not logged in
+  const userId = await requireUserSession(request); //to redirect user to login if he is not logged in
 
-  const expenses = await getExpenses();
+  const expenses = await getExpenses(userId);
   if (!expenses || expenses.length === 0) {
     throw json(
       { message: 'Could not load data from expenses analysis!' },
